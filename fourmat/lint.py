@@ -15,6 +15,7 @@ from . import ASSETS_DIR, cli
 CONFIG_FILE = Path(".fourmat")
 
 SNAPSHOT_GLOB = "*/snapshots/snap_*.py"
+CYTHON_GLOB = "*.pyx"
 SNAPSHOT_REGEX = r".*\/snapshots\/snap_.*\.py"
 CONFIGURATION_FILES = (".flake8", ".isort.cfg", "pyproject.toml")
 
@@ -48,6 +49,7 @@ def get_dirty_filenames(paths, *, staged=False):
         for filename in filenames
         if Path(filename).suffix == ".py"
         and not fnmatch.fnmatch(filename, SNAPSHOT_GLOB)
+        and not fnmatch.fnmatch(filename, CYTHON_GLOB)
     )
 
 
@@ -84,6 +86,8 @@ def isort(paths, *, check=False):
             *(("--check", "--diff") if check else ()),
             "--skip-glob",
             SNAPSHOT_GLOB,
+            "--skip-glob",
+            CYTHON_GLOB,
             "--atomic",
             "--quiet",
             "--",
