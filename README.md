@@ -1,5 +1,6 @@
 # Fourmat
 
+(Tesseract-specific fork that ignores Cython files)
 A library for batteries-included linting and autoformatting.
 
 ## Installation and Usage
